@@ -1,0 +1,43 @@
+function []=svm()
+%calculate 2-D datasets
+A=[-3 -5 -1;-5 -6 -1;-6 -2.3 -1;1.5 3 1;2.5 1 1];
+x=qp(A);
+m=[x(1) 0;0 x(2)];
+n=[-x(3) -x(3)]';
+l=m\n;
+p0=[l(1) 0];
+p1=[0 l(2)];
+plot(p0,p1);
+hold on;
+M=[3 5; 5 6;6 2.3];
+N=[1.5 3;2.5 1];
+scatter(M(:,1),M(:,2),'b');
+scatter(N(:,1),N(:,2),'rx');
+text(3,5.3,['x1'],'color','b');
+[row1,col1]=size(M)
+temp=-100;
+for i=1:1:row1
+  b1=-[x(1) x(2)]*M(i,:)';
+  if b1>temp
+    temp=b1;
+  end
+end
+n1=[-temp -temp]';
+l1=m\n1;
+p2=[l1(1) 0];
+p3=[0 l1(2)];
+plot(p2,p3,'r--');
+
+[row2,col2]=size(N)
+temp=0;
+for i=1:1:row2
+   b2=-[x(1) x(2)]*N(i,:)';
+   if b2<temp
+     temp=b2;
+   end
+end
+n2=[-temp -temp]';
+l2=m\n2;
+p4=[l2(1) 0];
+p5=[0 l2(2)];
+plot(p4,p5,'r--');
